@@ -2,11 +2,14 @@ import UserAddButton from "./UserAddButton";
 
 import { Container, HeaderText } from "./Title.styled";
 
-const Title = () => {
+interface TitleProps {
+  onAddUserButtonClick: () => void;
+}
+const Title = ({ onAddUserButtonClick }: TitleProps) => {
   return (
     <Container>
       <HeaderText>Users</HeaderText>
-      <UserAddButton />
+      <UserAddButton onAddUserButtonClick={onAddUserButtonClick} />
     </Container>
   );
 };
