@@ -2,9 +2,13 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 import { Button } from "./UserAddButton.styled";
 
-const UserAddButton = () => {
+interface UserAddButtonProps {
+  onAddUserButtonClick: () => void;
+}
+
+const UserAddButton = ({ onAddUserButtonClick }: UserAddButtonProps) => {
   return (
-    <Button>
+    <Button onClick={onAddUserButtonClick}>
       <PersonAddIcon sx={{ paddingRight: "0.5rem" }} />
       Add User
     </Button>
