@@ -16,12 +16,22 @@ const UserDashboard = () => {
   const openAddUserModal = () => setIsAddUserModal(true);
   const closeUserModal = () => setIsAddUserModal(false);
 
+  const addUser = (userInfo: Omit<User, "id">) => {
+    const user: User = { ...userInfo, id: userInfo.name };
+
+    setUsers((users) => [...users, user]);
+  };
+
   return (
     <Container>
       <Title onAddUserButtonClick={openAddUserModal} />
       <Table users={users} />
       {isAddUserModal && (
-        <UserAddModal isOpen={isAddUserModal} closeModal={closeUserModal} />
+        <UserAddModal
+          isOpen={isAddUserModal}
+          onConfirmClick={addUser}
+          closeModal={closeUserModal}
+        />
       )}
     </Container>
   );
