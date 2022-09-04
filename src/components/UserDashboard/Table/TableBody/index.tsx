@@ -1,17 +1,32 @@
+import { MouseEvent } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Popper from "@mui/material/Popper";
+import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import MuiTableBody from "@mui/material/TableBody";
-import TableRow from "@mui/material/TableRow";
+import SettingsIcon from "@mui/icons-material/Settings";
+
+import EditPopup from "./EditPopup";
 
 import type { User } from "../../../../common/types/user";
 import { getDate } from "./getDate";
 
 interface TableBodyProps {
   user: User;
+  anchorEl: HTMLButtonElement | null;
+  closePopup: () => void;
+  onSettingClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
-const TableBody = ({ user }: TableBodyProps) => {
+const TableBody = ({
+  user,
+  anchorEl,
+  closePopup,
+  onSettingClick,
+}: TableBodyProps) => {
+  const open = Boolean(anchorEl);
+
   return (
     <MuiTableBody>
       <TableRow>
@@ -30,7 +45,21 @@ const TableBody = ({ user }: TableBodyProps) => {
         <TableCell>{getDate(user.birthday)}</TableCell>
         <TableCell>{user.age}</TableCell>
         <TableCell>
-          <Button />
+          <Button
+            aria-describedby={user.id}
+            type="button"
+            onClick={onSettingClick}
+          >
+            <SettingsIcon sx={{ color: "#414141" }} />
+          </Button>
+          <Popper
+            placement="bottom-end"
+            open={open}
+            id={user.id}
+            anchorEl={anchorEl}
+          >
+            <EditPopup onEditClick={closePopup} onDeleteClick={closePopup} />
+          </Popper>
         </TableCell>
       </TableRow>
     </MuiTableBody>
