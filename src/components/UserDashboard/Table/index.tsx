@@ -9,9 +9,11 @@ import type { User } from "../../../common/types/user";
 
 interface TableProps {
   users: User[];
+  onEditClick: () => void;
+  onDeleteClick: (id: string) => void;
 }
 
-const Table = ({ users }: TableProps) => {
+const Table = ({ users, onEditClick, onDeleteClick }: TableProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleSettingClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -22,6 +24,11 @@ const Table = ({ users }: TableProps) => {
     setAnchorEl(null);
   };
 
+  const handleDeleteButtonClick = (id: string) => {
+    onDeleteClick(id);
+    closePopup();
+  };
+
   return (
     <MuiTable sx={{ margin: "1rem 0" }}>
       <TableHeader />
@@ -30,7 +37,8 @@ const Table = ({ users }: TableProps) => {
           key={user.id}
           user={user}
           anchorEl={anchorEl}
-          closePopup={closePopup}
+          onEditClick={closePopup}
+          onDeleteClick={handleDeleteButtonClick}
           onSettingClick={handleSettingClick}
         />
       ))}
