@@ -15,14 +15,16 @@ import { getDate } from "./getDate";
 interface TableBodyProps {
   user: User;
   anchorEl: HTMLButtonElement | null;
-  closePopup: () => void;
+  onEditClick: () => void;
+  onDeleteClick: (id: string) => void;
   onSettingClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 const TableBody = ({
   user,
   anchorEl,
-  closePopup,
+  onEditClick,
+  onDeleteClick,
   onSettingClick,
 }: TableBodyProps) => {
   const open = Boolean(anchorEl);
@@ -58,7 +60,10 @@ const TableBody = ({
             id={user.id}
             anchorEl={anchorEl}
           >
-            <EditPopup onEditClick={closePopup} onDeleteClick={closePopup} />
+            <EditPopup
+              onEditClick={onEditClick}
+              onDeleteClick={() => onDeleteClick(user.name)}
+            />
           </Popper>
         </TableCell>
       </TableRow>

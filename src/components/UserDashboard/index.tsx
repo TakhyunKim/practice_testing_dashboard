@@ -17,15 +17,26 @@ const UserDashboard = () => {
   const closeUserModal = () => setIsAddUserModal(false);
 
   const addUser = (userInfo: Omit<User, "id">) => {
+    // TODO: userInfo.name X 추후 api 적용 시 변경이 필요
     const user: User = { ...userInfo, id: userInfo.name };
 
     setUsers((users) => [...users, user]);
   };
 
+  const deleteUser = (id: string) => {
+    const deletedUsers = users.filter((user) => user.id !== id);
+
+    setUsers(deletedUsers);
+  };
+
   return (
     <Container>
       <Title onAddUserButtonClick={openAddUserModal} />
-      <Table users={users} />
+      <Table
+        onEditClick={() => console.log("edit")}
+        onDeleteClick={deleteUser}
+        users={users}
+      />
       {isAddUserModal && (
         <UserAddModal
           isOpen={isAddUserModal}
